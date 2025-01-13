@@ -1,7 +1,0 @@
-v 4
-file . "uart_tb.vhd" "654a62437ab73bb11da4bee9020481ac32a69c72" "20250112202341.207":
-  entity uart_tb at 1( 0) + 0 on 25;
-  architecture behavioral of uart_tb at 8( 102) + 0 on 26;
-file . "uart.vhd" "75aa6de9eee1744737b92c78ae07e30aca0de770" "20250112202341.176":
-  entity uart at 1( 0) + 0 on 23;
-  architecture behavioral of uart at 16( 233) + 0 on 24;
