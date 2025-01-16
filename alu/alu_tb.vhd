@@ -12,39 +12,56 @@ architecture behavioral of alu_tb is
         port(
             a: in std_logic_vector(3 downto 0);
             b: in std_logic_vector(3 downto 0);
-            opcode: in std_logic_vector(1 downto 0);
+            opcode: in std_logic_vector(2 downto 0);
             result: out std_logic_vector(3 downto 0);
-            carry: out std_logic
+            c: out std_logic;
+            z: out std_logic
         );
     end component;
 
-        signal A: std_logic_vector(3 downto 0) := "1010";
+    component counter
+        port(
+            clk: in std_logic;
+            reset: in std_logic;
+            enable: in std_logic;
+            count: out std_logic_vector(3 downto 0)
+        );
+    end component;
+
+        signal CLK: std_logic := '0';
+        signal RESET: std_logic := '0';
+        signal ENABLE: std_logic := '1';  
+        signal COUNT: std_logic_vector(3 downto 0) := (others => '0');
+        signal A: std_logic_vector(3 downto 0) := (others => '0');
         signal B: std_logic_vector(3 downto 0) := "1001";
-        signal OPCODE: std_logic_vector(1 downto 0) := (others => '0');
         signal RESULT: std_logic_vector(3 downto 0) := (others => '0');
         signal CARRY: std_logic;
+        signal ZERO: std_logic;
 begin
-    uut : alu
+    u0 : counter
+    port map(
+        clk => CLK,
+        reset => RESET,
+        enable => ENABLE,
+        count => COUNT
+            );
+    u1 : alu
     port map(
             a => A,
             b => B,
-            opcode => OPCODE,
+            opcode => COUNT(2 downto 0),
             result => RESULT,
-            carry => CARRY
+            c  => CARRY,
+            z => ZERO
             );
     stim_process : process
     begin
-        OPCODE <= "00";
-        wait for 10 ns;
-
-        OPCODE <= "01";
-        wait for 10 ns;
-
-        OPCODE <= "10";
-        wait for 10 ns;
-
-        OPCODE <= "11";
-        wait for 10 ns;
+        for i in 0 to 20 loop
+            CLK <= '0';
+            wait for 5 ns;
+            clk <= '1';
+            wait for 5 ns;
+        end loop;
         wait;
     end process;
 end behavioral;
