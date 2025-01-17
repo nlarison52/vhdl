@@ -78,7 +78,7 @@ begin
 
         elsif (opcode = "101") then
            -- shift R a register (non arithmetic)
-            result_reg <= '0' & a(3 downto 1); 
+            result_reg <= a(3) & a(3 downto 1); 
 
             if (result_reg = "0000") then
                 zero <= '1';
@@ -87,9 +87,10 @@ begin
             end if;
 
         elsif (opcode = "110") then 
-            -- shift L a register (non arithmetic)
-            result_reg <= a(2 downto 0) & '0';
-
+            -- shift L a register (arithmetic)
+            result_reg <= a(3) & a(1 downto 0) & '0';
+            carry <= a(2);
+            -- this is an arithmetic left shift  need some logic for overflow
             if (result_reg = "0000") then
                 zero <= '1';
             else
