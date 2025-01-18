@@ -89,8 +89,9 @@ begin
         elsif (opcode = "110") then 
             -- shift L a register (arithmetic)
             result_reg <= a(3) & a(1 downto 0) & '0';
-            carry <= a(2);
-            -- this is an arithmetic left shift  need some logic for overflow
+            carry <= a(2) xor a(1);
+            -- the carry is 1 if a(2) != a(1) this means that there was an overflow
+            -- because of the signed nature of the operation
             if (result_reg = "0000") then
                 zero <= '1';
             else
