@@ -1,0 +1,8 @@
+[b, a] = butter(1, 0.2); % 1st-order, cutoff at 20% of Nyquist frequency
+b = round(b * 128); % scaling my coefficients to fit in 8 bit signed
+a = round(a * 128);
+disp("a = [")
+disp(dec2bin(a, 8))
+disp("]\nb=[")
+disp(dec2bin(b, 8))
+disp("]")
