@@ -7,18 +7,21 @@ end entity;
 
 architecture behavior of dec_tb is
     signal CLK: std_logic := '0'; 
+    signal RESET: std_logic := '0';
     signal OUTPUT: std_logic_vector(3 downto 0);
 
-    component dec is
+    component dec_hl is
         port(
             clk: in std_logic;
+            reset: in std_logic;
             output: out std_logic_vector(3 downto 0)
             );
     end component;
 begin
-    uut : dec
+    uut : dec_hl
     port map(
     CLK => clk,
+    RESET => reset,
     OUTPUT => output
             );
 
